@@ -6,6 +6,9 @@
 <title>Cannon Goodnight — Mazatlán</title>
 <meta name="description" content="Cannon Goodnight — periodista y asesor de bienes raíces en Mazatlán, Sinaloa. Reportajes, propiedades e historias del puerto.">
 <link rel="canonical" href="https://cannongoodnight.com/">
+<link rel="alternate" hreflang="es-MX" href="https://cannongoodnight.com/">
+<link rel="alternate" hreflang="en" href="https://cannongoodnight.com/en/">
+<link rel="alternate" hreflang="x-default" href="https://cannongoodnight.com/">
 <meta property="og:url" content="https://cannongoodnight.com/">
 <meta property="og:title" content="Cannon Goodnight — Mazatlán">
 <meta property="og:description" content="Periodista y asesor de bienes raíces en Mazatlán, Sinaloa.">
@@ -26,6 +29,14 @@
     background:var(--bg); color:var(--ink); line-height:1.6;
     max-width:640px; margin:0 auto; padding:40px 22px 56px;
   }
+  .topbar{display:flex;justify-content:flex-end;margin-bottom:14px}
+  .lang{
+    display:inline-flex;align-items:center;min-height:44px;padding:0 18px;
+    font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--muted);text-decoration:none;border:1px solid var(--line);
+    border-radius:999px;transition:border-color .15s ease,color .15s ease;
+  }
+  .lang:hover{border-color:var(--accent);color:var(--accent)}
   .mark{
     width:74px;height:74px;border-radius:50%;
     border:2.5px solid var(--accent); color:var(--accent);
@@ -117,6 +128,10 @@
 </script>
 </head>
 <body>
+
+  <div class="topbar">
+    <a class="lang" href="/en/" hreflang="en" lang="en">English</a>
+  </div>
 
   <div class="mark">C</div>
 
