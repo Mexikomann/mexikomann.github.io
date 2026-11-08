@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow,noarchive">
+<meta name="referrer" content="no-referrer">
+<meta name="theme-color" content="#101418">
+<title>index</title>
+<style>
+ :root{color-scheme:dark}
+ *{box-sizing:border-box}
+ html,body{max-width:100%;overflow-x:hidden}
+ body{margin:0;padding:16px 18px;background:#101418;color:#f2f5f7;
+       font:600 26px/1.35 -apple-system,system-ui,"Segoe UI",Roboto,sans-serif}
+ audio{display:none}
+ button{display:block;width:100%;max-width:100%;padding:24px 18px;border:0;border-radius:20px;
+         background:#2f9e6b;color:#fff;font:700 30px/1.2 inherit;letter-spacing:.5px}
+ p{margin:0 0 12px;overflow-wrap:break-word;word-break:normal}
+ p:first-of-type{font-size:30px}
+ .when{font-size:17px;font-weight:400;color:#8fa3b0;margin-top:14px}
+</style></head><body>
+<audio id="a" src="index.mp3" autoplay playsinline preload="auto"></audio>
+<button id="b">▶ Escuchar</button>
+<p>Hoy es sábado 7 de noviembre de 2026.</p>
+<p>25 grados y cielo despejado.</p>
+<p class="when">Actualizado: sábado 7 de noviembre, 9:16 de la noche</p>
+<script>
+ var a=document.getElementById('a');
+ function hide(){document.getElementById('b').style.display='none';}
+ a.addEventListener('playing',hide);
+ document.getElementById('b').onclick=function(){a.currentTime=0;a.play();};
+</script>
+</body></html>
