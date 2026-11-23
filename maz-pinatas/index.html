@@ -6,6 +6,13 @@
 <meta name="robots" content="index,follow">
 <title>Maz Piñatas — tamaños y precios</title>
 <meta name="description" content="Piñatas artesanales en Mazatlán. Cuatro tamaños, precio fijo, 7 días de anticipación y anticipo del 50%.">
+<meta name="theme-color" content="#b3185b">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+<link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
+<!-- No service worker on purpose: every price on this page was baked in from the store database
+     at build time, so a cached copy served offline could quote a figure the shop no longer
+     charges. The page needs the network; the icon is a shortcut, not an offline price list. -->
 <style>
   :root{--ink:#161311;--muted:#5b524c;--paper:#fffdf9;--line:#e3dbd1;--brand:#b3185b;--ok:#0b6b3a}
   *{box-sizing:border-box}
