@@ -78,11 +78,16 @@
       <input type="checkbox" id="express">
       <span>Servicio express 24 h (+50%)</span>
     </label>
+    <label class="switch" style="margin-top:10px">
+      <input type="checkbox" id="nostick">
+      <span>No quiero el palo (vara) &mdash; &minus;$50</span>
+    </label>
   </section>
 
   <section>
     <h2>5 · Extras (no incluidos)</h2>
-    <p class="note">El palo se vende por separado. No incluye estampados.</p>
+    <p class="note">Incluye el palo (vara). Si no lo quiere, se descuentan $50. No incluye estampados.</p>
+    <p class="note">Incluye el palo (vara). El estampado se cotiza aparte.</p>
     <div class="chips" id="extras"></div>
   </section>
 
@@ -111,50 +116,102 @@
   "table": {
     "Chica": {
       "base": 180,
-      "express": {
-        "deposit": 135,
-        "total": 270
-      },
+      "discount": 50,
       "range": "15–35",
-      "standard": {
-        "deposit": 90,
-        "total": 180
+      "with_stick": {
+        "express": {
+          "deposit": 135,
+          "total": 270
+        },
+        "standard": {
+          "deposit": 90,
+          "total": 180
+        }
+      },
+      "without_stick": {
+        "express": {
+          "deposit": 98,
+          "total": 195
+        },
+        "standard": {
+          "deposit": 65,
+          "total": 130
+        }
       }
     },
     "Grande": {
       "base": 450,
-      "express": {
-        "deposit": 338,
-        "total": 675
-      },
+      "discount": 50,
       "range": "75–95",
-      "standard": {
-        "deposit": 225,
-        "total": 450
+      "with_stick": {
+        "express": {
+          "deposit": 338,
+          "total": 675
+        },
+        "standard": {
+          "deposit": 225,
+          "total": 450
+        }
+      },
+      "without_stick": {
+        "express": {
+          "deposit": 300,
+          "total": 600
+        },
+        "standard": {
+          "deposit": 200,
+          "total": 400
+        }
       }
     },
     "MazGrande": {
       "base": 580,
-      "express": {
-        "deposit": 435,
-        "total": 870
-      },
+      "discount": 50,
       "range": "100–120",
-      "standard": {
-        "deposit": 290,
-        "total": 580
+      "with_stick": {
+        "express": {
+          "deposit": 435,
+          "total": 870
+        },
+        "standard": {
+          "deposit": 290,
+          "total": 580
+        }
+      },
+      "without_stick": {
+        "express": {
+          "deposit": 398,
+          "total": 795
+        },
+        "standard": {
+          "deposit": 265,
+          "total": 530
+        }
       }
     },
     "Mediana": {
       "base": 380,
-      "express": {
-        "deposit": 285,
-        "total": 570
-      },
+      "discount": 50,
       "range": "45–65",
-      "standard": {
-        "deposit": 190,
-        "total": 380
+      "with_stick": {
+        "express": {
+          "deposit": 285,
+          "total": 570
+        },
+        "standard": {
+          "deposit": 190,
+          "total": 380
+        }
+      },
+      "without_stick": {
+        "express": {
+          "deposit": 248,
+          "total": 495
+        },
+        "standard": {
+          "deposit": 165,
+          "total": 330
+        }
       }
     }
   }
@@ -233,6 +290,7 @@ function refresh() {
   if (!state.size || days === null) { setSum('Elige un tamaño y una fecha','—'); $('go').disabled = true; say(''); return; }
   const info = DATA.table[state.size];
   const mode = express ? 'express' : 'standard';
+  const variant = $('nostick').checked ? info.without_stick : info.with_stick;
   const need = express ? Math.ceil(DATA.expressH / 24) : DATA.lead;
   if (days < need) {
     setSum('No disponible para esa fecha','—'); $('go').disabled = true;
@@ -241,7 +299,7 @@ function refresh() {
       : 'El pedido estándar necesita ' + DATA.lead + ' días. Puedes elegir express (+' + DATA.expressPct + '%).');
     return;
   }
-  const m = info[mode];
+  const m = variant[mode];
   say('');
   setSum('Total ' + money(m.total) + ' · anticipo ' + money(m.deposit),
          express ? 'Express ' + DATA.expressH + ' h' : 'Servicio estándar');
@@ -251,18 +309,22 @@ function refresh() {
 
 $('event').addEventListener('change', refresh);
 $('express').addEventListener('change', refresh);
+$('nostick').addEventListener('change', refresh);
 
 $('go').addEventListener('click', () => {
   const days = daysOut(); const express = $('express').checked;
-  const info = DATA.table[state.size]; const m = info[express ? 'express' : 'standard'];
+  const info = DATA.table[state.size];
+  const variant = $('nostick').checked ? info.without_stick : info.with_stick;
+  const m = variant[express ? 'express' : 'standard'];
   const text = $('banner').value.trim() || '(sin texto)';
   const spec = [
     'MAZ PIÑATAS — ESPECIFICACIÓN',
     'Modelo: ' + state.size + ' (' + info.range + ' cm)',
     'Colores: ' + [...state.colors].join(', '),
+    'Palo (vara): ' + ($('nostick').checked ? 'no incluido (-$' + info.discount + ')' : 'incluido'),
     'Texto del listón: ' + text,
-    'El palo se vende por separado. No incluye estampados.',
-    'Palo (vara): no incluido, se vende por separado',
+    'Incluye el palo (vara). Si no lo quiere, se descuentan $50. No incluye estampados.',
+
     'Fecha del evento: ' + $('event').value + ' (' + days + ' días de anticipación)',
     'Servicio: ' + (express ? 'express ' + DATA.expressH + ' h (+' + DATA.expressPct + '%)' : 'estándar (' + DATA.lead + ' días)'),
     'TOTAL: ' + money(m.total) + ' MXN',
